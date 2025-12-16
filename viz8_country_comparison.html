@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country PM2.5 Trends - Air Quality Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .nav {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .nav a:hover { text-decoration: underline; }
+        #chart { margin: 30px 0; }
+        .insights {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        .insights h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        .insights ul {
+            margin-left: 20px;
+        }
+        .insights li {
+            color: #4a5568;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PM2.5 Trends: Selected Countries</h1>
+        <p style="color: #718096; margin-bottom: 20px;">Comparative Analysis (2010-2023)</p>
+        
+        <div class="nav">
+            <a href="viz7_asthma_rates.html">Previous: Asthma Rates</a>
+            <a href="index.html">Home</a>
+            <a href="viz9_life_expectancy.html">Next: Life Expectancy</a>
+        </div>
+
+        <div id="chart"></div>
+
+        <div class="insights">
+            <h3>Key Insights</h3>
+            <ul>
+                <li>China shows dramatic improvement: PM2.5 dropped from 82 µg/m³ (2013) to 52 µg/m³ (2023) through aggressive environmental policies</li>
+                <li>India's PM2.5 has risen steadily from 68 to 78 µg/m³, with no signs of reversal despite policy attempts</li>
+                <li>United States and Germany maintain consistently low levels below 10 µg/m³, demonstrating sustainable clean air is achievable</li>
+                <li>Bangladesh remains critically high at 80+ µg/m³ throughout the period, requiring urgent international intervention</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+        
+        const china = [78, 80, 82, 82, 79, 75, 70, 65, 60, 57, 55, 54, 53, 52];
+        const india = [68, 70, 72, 73, 74, 75, 76, 77, 77, 78, 77, 78, 78, 78];
+        const bangladesh = [82, 83, 84, 85, 85, 84, 84, 85, 84, 85, 84, 84, 84, 84.5];
+        const usa = [10, 9.5, 9, 8.8, 8.5, 8.2, 8, 7.8, 7.5, 7.3, 7, 7.2, 7.5, 7.8];
+        const germany = [11, 10.5, 10, 9.5, 9.2, 9, 8.7, 8.5, 8.2, 8, 7.8, 7.5, 7.3, 7];
+
+        const trace1 = {
+            x: years,
+            y: china,
+            mode: 'lines+markers',
+            name: 'China',
+            line: { width: 3 }
+        };
+
+        const trace2 = {
+            x: years,
+            y: india,
+            mode: 'lines+markers',
+            name: 'India',
+            line: { width: 3 }
+        };
+
+        const trace3 = {
+            x: years,
+            y: bangladesh,
+            mode: 'lines+markers',
+            name: 'Bangladesh',
+            line: { width: 3 }
+        };
+
+        const trace4 = {
+            x: years,
+            y: usa,
+            mode: 'lines+markers',
+            name: 'United States',
+            line: { width: 3 }
+        };
+
+        const trace5 = {
+            x: years,
+            y: germany,
+            mode: 'lines+markers',
+            name: 'Germany',
+            line: { width: 3 }
+        };
+
+        const guideline = {
+            x: years,
+            y: Array(years.length).fill(5),
+            mode: 'lines',
+            name: 'WHO Guideline',
+            line: { color: 'red', dash: 'dash', width: 2 }
+        };
+
+        const layout = {
+            title: 'PM2.5 Trends: Selected Countries (2010-2023)',
+            xaxis: { title: 'Year' },
+            yaxis: { title: 'PM2.5 (µg/m³)' },
+            height: 600,
+            hovermode: 'x unified'
+        };
+
+        Plotly.newPlot('chart', [trace1, trace2, trace3, trace4, trace5, guideline], layout, {responsive: true});
+    </script>
+</body>
+</html>

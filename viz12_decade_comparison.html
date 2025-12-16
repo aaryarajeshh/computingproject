@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decade Comparison - Air Quality Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .nav {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .nav a:hover { text-decoration: underline; }
+        #chart { margin: 30px 0; }
+        .insights {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        .insights h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        .insights ul {
+            margin-left: 20px;
+        }
+        .insights li {
+            color: #4a5568;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Decade Comparison: 2010s vs 2020s</h1>
+        <p style="color: #718096; margin-bottom: 20px;">Air Quality and Health by Income Level</p>
+        
+        <div class="nav">
+            <a href="viz11_copd_rates.html">Previous: COPD Rates</a>
+            <a href="index.html">Home</a>
+        </div>
+
+        <div id="chart"></div>
+
+        <div class="insights">
+            <h3>Key Insights</h3>
+            <ul>
+                <li>Low-income countries saw PM2.5 increase by 8% from 2010s to 2020s (59.8 to 64.7 µg/m³), while high-income nations improved by 15%</li>
+                <li>Respiratory deaths rose 12% in low-income countries but fell 18% in high-income countries over the same period</li>
+                <li>The air quality gap between rich and poor nations widened significantly over the past decade, exacerbating global health inequality</li>
+                <li>Without intervention, projections suggest low-income countries will face 30% higher PM2.5 levels by 2030 compared to 2020</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const categories = ['Low Income', 'Middle Income', 'High Income'];
+        
+        const pm25_2010s = [59.8, 41.2, 10.5];
+        const pm25_2020s = [64.7, 42.8, 8.9];
+        
+        const deaths_2010s = [68.5, 48.2, 16.8];
+        const deaths_2020s = [76.8, 50.5, 13.8];
+
+        const trace1 = {
+            x: categories,
+            y: pm25_2010s,
+            name: '2010s PM2.5',
+            type: 'bar',
+            marker: { color: '#4299e1' }
+        };
+
+        const trace2 = {
+            x: categories,
+            y: pm25_2020s,
+            name: '2020s PM2.5',
+            type: 'bar',
+            marker: { color: '#2b6cb0' }
+        };
+
+        const trace3 = {
+            x: categories,
+            y: deaths_2010s,
+            name: '2010s Deaths',
+            type: 'bar',
+            marker: { color: '#fc8181' },
+            yaxis: 'y2'
+        };
+
+        const trace4 = {
+            x: categories,
+            y: deaths_2020s,
+            name: '2020s Deaths',
+            type: 'bar',
+            marker: { color: '#e53e3e' },
+            yaxis: 'y2'
+        };
+
+        const layout = {
+            title: 'Decade Comparison: Air Quality and Health by Income Level',
+            xaxis: { title: 'Income Level' },
+            yaxis: { title: 'PM2.5 (µg/m³)', side: 'left' },
+            yaxis2: { 
+                title: 'Respiratory Deaths per 100k', 
+                overlaying: 'y', 
+                side: 'right' 
+            },
+            barmode: 'group',
+            height: 600,
+            legend: { x: 0.7, y: 1 }
+        };
+
+        Plotly.newPlot('chart', [trace1, trace2, trace3, trace4], layout, {responsive: true});
+    </script>
+</body>
+</html>

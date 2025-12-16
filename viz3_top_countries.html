@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Most Polluted Countries - Air Quality Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .nav {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .nav a:hover { text-decoration: underline; }
+        #chart { margin: 30px 0; }
+        .insights {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        .insights h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        .insights ul {
+            margin-left: 20px;
+        }
+        .insights li {
+            color: #4a5568;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Top 10 Countries by PM2.5 Concentration</h1>
+        <p style="color: #718096; margin-bottom: 20px;">2023 Data</p>
+        
+        <div class="nav">
+            <a href="viz2_income_distribution.html">Previous: Income Distribution</a>
+            <a href="index.html">Home</a>
+            <a href="viz4_gdp_correlation.html">Next: GDP Correlation</a>
+        </div>
+
+        <div id="chart"></div>
+
+        <div class="insights">
+            <h3>Key Insights</h3>
+            <ul>
+                <li>Bangladesh leads with alarming PM2.5 levels of 84.5 µg/m³, nearly 17 times the WHO guideline</li>
+                <li>South Asian countries (Bangladesh, India, Pakistan, Nepal) dominate the top 10, facing severe air quality crises</li>
+                <li>All top 10 countries exceed 50 µg/m³, placing millions at risk for respiratory diseases and premature death</li>
+                <li>Rapid industrialization without adequate environmental controls is the primary driver in these nations</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const countries = ['Bangladesh', 'India', 'Pakistan', 'Mongolia', 'Nepal', 'Egypt', 'Indonesia', 'Nigeria', 'Iraq', 'China'];
+        const pm25Values = [84.5, 78.2, 72.8, 68.5, 65.3, 62.1, 58.7, 56.4, 54.2, 52.1];
+
+        const trace = {
+            x: pm25Values,
+            y: countries,
+            type: 'bar',
+            orientation: 'h',
+            marker: {
+                color: pm25Values,
+                colorscale: 'Reds',
+                showscale: true,
+                colorbar: { title: 'PM2.5 (µg/m³)' }
+            }
+        };
+
+        const layout = {
+            title: 'Top 10 Countries by PM2.5 Concentration (2023)',
+            xaxis: { title: 'PM2.5 (µg/m³)' },
+            yaxis: { title: '' },
+            height: 600,
+            margin: { l: 100 }
+        };
+
+        Plotly.newPlot('chart', [trace], layout, {responsive: true});
+    </script>
+</body>
+</html>

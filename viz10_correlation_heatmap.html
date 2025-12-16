@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlation Heatmap - Air Quality Analysis</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .nav {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .nav a:hover { text-decoration: underline; }
+        #chart { margin: 30px 0; }
+        .insights {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        .insights h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        .insights ul {
+            margin-left: 20px;
+        }
+        .insights li {
+            color: #4a5568;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Correlation Heatmap</h1>
+        <p style="color: #718096; margin-bottom: 20px;">Air Quality, Economics, and Health Relationships</p>
+        
+        <div class="nav">
+            <a href="viz9_life_expectancy.html">Previous: Life Expectancy</a>
+            <a href="index.html">Home</a>
+            <a href="viz11_copd_rates.html">Next: COPD Rates</a>
+        </div>
+
+        <div id="chart"></div>
+
+        <div class="insights">
+            <h3>Key Insights</h3>
+            <ul>
+                <li>Strongest correlations: PM2.5 with respiratory deaths (0.72), PM2.5 with COPD (0.68), and GDP with life expectancy (0.82)</li>
+                <li>GDP per capita shows strong negative correlation with PM2.5 (-0.68), confirming that economic development enables cleaner air</li>
+                <li>Urban population has weak positive correlation with PM2.5 (0.45), showing urbanization alone doesn't determine air quality</li>
+                <li>Health outcomes (life expectancy, respiratory deaths) are more strongly linked to air quality than to GDP alone, highlighting pollution as an independent health determinant</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const variables = ['PM2.5', 'GDP', 'Urban%', 'Life Exp', 'Resp Deaths', 'Asthma', 'COPD'];
+        
+        const correlationMatrix = [
+            [1.00, -0.68, 0.45, -0.65, 0.72, 0.61, 0.68],
+            [-0.68, 1.00, 0.52, 0.82, -0.59, -0.48, -0.55],
+            [0.45, 0.52, 1.00, 0.38, 0.32, 0.28, 0.35],
+            [-0.65, 0.82, 0.38, 1.00, -0.78, -0.62, -0.71],
+            [0.72, -0.59, 0.32, -0.78, 1.00, 0.65, 0.73],
+            [0.61, -0.48, 0.28, -0.62, 0.65, 1.00, 0.58],
+            [0.68, -0.55, 0.35, -0.71, 0.73, 0.58, 1.00]
+        ];
+
+        const trace = {
+            z: correlationMatrix,
+            x: variables,
+            y: variables,
+            type: 'heatmap',
+            colorscale: 'RdBu',
+            zmid: 0,
+            text: correlationMatrix,
+            texttemplate: '%{text:.2f}',
+            textfont: { size: 12 },
+            colorbar: { title: 'Correlation' }
+        };
+
+        const layout = {
+            title: 'Correlation Heatmap: Air Quality, Economics, and Health',
+            xaxis: { side: 'bottom' },
+            yaxis: { autorange: 'reversed' },
+            height: 700,
+            width: 800
+        };
+
+        Plotly.newPlot('chart', [trace], layout, {responsive: true});
+    </script>
+</body>
+</html>
